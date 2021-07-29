@@ -29,4 +29,4 @@ comparison <- stanfit(
   )
 )
 
-comparison
+rstan::extract(comparison)

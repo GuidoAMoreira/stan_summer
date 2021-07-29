@@ -24,9 +24,9 @@ real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) 
   real log1mL = log_diff_exp(0, logL);
   
   // Setting up first iterations
-  old_term = logFunction(n0, p);
+  old_term = logFunction(n0_, p);
   n0_ += 1;
-  new_term = logFunction(n0, p);
+  new_term = logFunction(n0_, p);
   n0_ += 1;
   storeVal[1] = old_term;
   
