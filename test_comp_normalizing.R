@@ -15,18 +15,18 @@ COMP_lpmf <- function(k, theta){
   )
 }
 
-comparison <- 
-  
+comparison <- stanfit(
   model$sample(
-  data = list(Mu = mu, Nu = nu, Epsilon = epsilon, maxIter = M,
-              TrueValue = matrixStats::logSumExp(
-                sort(
-                  COMP_lpmf(k = 0:M, theta = c(mu, nu))
-                )
-              )),
-  iter_warmup = 0,
-  iter_sampling = 1,
-  fixed_param = TRUE
+    data = list(Mu = mu, Nu = nu, Epsilon = epsilon, maxIter = M,
+                TrueValue = matrixStats::logSumExp(
+                  sort(
+                    COMP_lpmf(k = 0:M, theta = c(mu, nu))
+                  )
+                )),
+    iter_warmup = 0,
+    iter_sampling = 1,
+    fixed_param = TRUE
+  )
 )
 
 comparison
