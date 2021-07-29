@@ -24,7 +24,7 @@ comparison <- stanfit(
                   )
                 )),
     iter_warmup = 0,
-    iter_sampling = 1,
+    iter_sampling = 2,
     fixed_param = TRUE
   )
 )
