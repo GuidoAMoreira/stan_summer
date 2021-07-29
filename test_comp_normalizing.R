@@ -1,30 +1,24 @@
 library(cmdstanr)
+library(matrixStats)
+
+#### Facilitator functions ####
 stanfit <- function(fit) rstan::read_stan_csv(fit$output_files())
+COMP_lpmf <- function(k, theta) k * log(theta[1]) - theta[2] * lfactorial(k)
+TrueValue <- function(mu, nu){
+  if (nu == 1) mu else if (nu == 2) log(besselI(2*sqrt(mu), nu = 0)) else
+    logSumExp(sort(COMP_lpmf(k = 0:1e5, c(mu, nu))))}
 
-model <- cmdstanr::cmdstan_model("COMP_normalizing.stan",
-                                 include_paths = ".")
+model <- cmdstan_model("COMP_normalizing.stan", include_paths = ".")
 
-mu <- 2; nu <- 0.5
+mu <- 5; nu <- 2
 epsilon <- 1e-16; M <- 1e5
-
-COMP_lpmf <- function(k, theta){
-  mu <- theta[1]
-  nu <- theta[2]
-  return(
-    k * log(mu) - nu*lfactorial(k)  
-  )
-}
 
 comparison <- stanfit(
   model$sample(
     data = list(Mu = mu, Nu = nu, Epsilon = epsilon, maxIter = M,
-                TrueValue = matrixStats::logSumExp(
-                  sort(
-                    COMP_lpmf(k = 0:M, theta = c(mu, nu))
-                  )
-                )),
+                TrueValue = TrueValue(mu, nu) ),
     iter_warmup = 0,
-    iter_sampling = 2,
+    iter_sampling = 1,
     fixed_param = TRUE
   )
 )

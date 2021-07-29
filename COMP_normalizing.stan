@@ -24,11 +24,11 @@ transformed data {
 }
 
 generated quantities {
-  real estimated[2] = infiniteAdaptive(params, log(Epsilon), maxIter, negative_infinity(), 0);
+  real estimated[2] = infiniteAdaptive(params, Epsilon, maxIter, negative_infinity(), 0);
   real difference;
   
   if (TrueValue > estimated[1])
-    difference = log_diff_exp(TrueValue, estimated[1]);
+    difference = exp(log_diff_exp(TrueValue, estimated[1]));
   else
-    difference = log_diff_exp(estimated[1], TrueValue);
+    difference = exp(log_diff_exp(estimated[1], TrueValue));
 }
