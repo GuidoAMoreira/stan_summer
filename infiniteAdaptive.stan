@@ -16,7 +16,7 @@ int adaptiveConvergenceCheck(real oldT, real newT, real lepsilon, real log1mL) {
 // int k and real[] parameters
 real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) {
   vector[maxIter+2] storeVal;
-  real leps = log(epsilon) + log2;
+  real leps = log(epsilon) + log(2);
   int n = 1;
   int n0_ = n0;
   real old_term;
@@ -25,7 +25,7 @@ real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) 
   
   // Setting up first iterations
   old_term = logFunction(n0, p);
-  n0 += 1;
+  n0_ += 1;
   new_term = logFunction(n0, p);
   n0_ += 1;
   storeVal[1] = old_term;
@@ -50,7 +50,7 @@ real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) 
     if (n == maxIter) break;
   }
   //storeVal[n+1] = new_term;
-  storeVal[n+1] = new_term - log_diff_exp(0, new_term - old_term) - log2;
-  storeVal[n+2] = new_term - log2;
+  storeVal[n+1] = new_term - log_diff_exp(0, new_term - old_term) - log(2);
+  storeVal[n+2] = new_term - log(2);
   return {log_sum_exp(storeVal[:(n+2)]), n};
 }
