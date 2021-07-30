@@ -8,9 +8,10 @@ TrueValue <- function(mu, nu){
   if (nu == 1) mu else if (nu == 2) log(besselI(2*sqrt(mu), nu = 0)) else
     logSumExp(sort(COMP_lpmf(k = 0:1e5, c(mu, nu))))}
 
+# system("rm COMP_normalizing")
 model <- cmdstan_model("COMP_normalizing.stan", include_paths = ".")
 
-mu <- 5; nu <- 2
+mu <- 5; nu <- 1/2
 epsilon <- 1e-16; M <- 1e5
 
 comparison <- stanfit(
