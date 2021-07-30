@@ -38,6 +38,8 @@ generated quantities {
   real estimated[2] = infiniteAdaptive(params, Epsilon, maxIter, negative_infinity(), 0);
   real difference;
   real difference2;
+  real truth_1 = TrueValue;
+  real truth_2 = TV;
   
   if (TrueValue > estimated[1])
   difference = exp(log_diff_exp(TrueValue, estimated[1]));
