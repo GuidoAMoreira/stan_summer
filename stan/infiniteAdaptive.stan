@@ -34,7 +34,7 @@ real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) 
     n0_ += 1;
     n += 1;
     storeVal[n] = logFunction(n0_, p);
-    if (n >= maxIter) return({log_sum_exp(storeVal[:n]), n}); // Return if maxIter is reached
+    if (n >= maxIter) return({log_sum_exp(storeVal[:n]), 1. * n}); // Return if maxIter is reached
   }
   // Start testing convergence after the maximum
   while ( adaptiveConvergenceCheck(storeVal[n - 1], storeVal[n], leps, log1mL) )  {
@@ -46,5 +46,5 @@ real[] infiniteAdaptive(real[] p, real epsilon, int maxIter, real logL, int n0) 
   temp = storeVal[n];
   storeVal[n] = temp - log_diff_exp(0, temp - storeVal[n - 1]) - log2();
   storeVal[n + 1] = temp - log1mL - log2();
-  return {log_sum_exp(sort_asc(storeVal[:(n + 1)])), n};
+  return {log_sum_exp(sort_asc(storeVal[:(n + 1)])), 1. * n};
 }

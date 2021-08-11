@@ -9,8 +9,8 @@ TrueValue <- function(mu, nu){
     logSumExp(sort(COMP_lpmf(k = 0:1e5, c(mu, nu))))}
 
 # system("rm COMP_normalizing")
-model <- cmdstan_model("../stan/COMP_normalizing.stan",
-                       include_paths = "../stan")
+model <- cmdstan_model("stan/COMP_normalizing.stan",
+                       include_paths = "stan")
 
 mu <- 5; nu <- 1/2
 epsilon <- 1e-16; M <- 1e5

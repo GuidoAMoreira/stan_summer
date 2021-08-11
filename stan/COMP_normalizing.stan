@@ -17,8 +17,15 @@ functions{
       }
     } 
   }
+  real difference_check(real v1, real v2){
+    if (v1 > v2)
+      return(exp(log_diff_exp(v1, v2)));
+    else
+      return(exp(log_diff_exp(v2, v1)));
+  }
   // logFunction must be defined beforehand
   #include infiniteAdaptive.stan
+  #include infiniteSumToThreshold.stan
 }
 
 data{
@@ -35,19 +42,17 @@ transformed data {
 }
 
 generated quantities {
-  real estimated[2] = infiniteAdaptive(params, Epsilon, maxIter, negative_infinity(), 0);
-  real difference;
-  real difference2;
+  real estimatedAdaptive[2] = infiniteAdaptive(params, Epsilon, maxIter, negative_infinity(), 0);
+  real estimatedSumToThreshold[2] = infiniteSumToThreshold(params, Epsilon, maxIter, 0);
+  real differenceAdaptive;
+  real differenceSumToThreshold;
+  real differenceAdaptive2;
+  real differenceSumToThreshold2;
   real truth_1 = TrueValue;
   real truth_2 = TV;
   
-  if (TrueValue > estimated[1])
-  difference = exp(log_diff_exp(TrueValue, estimated[1]));
-  else
-  difference = exp(log_diff_exp(estimated[1], TrueValue));
-  print(TV);
-  if (TV > estimated[1])
-  difference2 = exp(log_diff_exp(TV, estimated[1]));
-  else
-  difference2 = exp(log_diff_exp(estimated[1], TV));
+  differenceAdaptive = difference_check(TrueValue, estimatedAdaptive[1]);
+  differenceSumToThreshold = difference_check(TrueValue, estimatedSumToThreshold[1]);
+  differenceAdaptive2 = difference_check(TV, estimatedAdaptive[1]);
+  differenceSumToThreshold2 = difference_check(TV, estimatedSumToThreshold[1]);
 }
