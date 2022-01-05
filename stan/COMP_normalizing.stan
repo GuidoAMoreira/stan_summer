@@ -24,7 +24,7 @@ functions{
       return(exp(log_diff_exp(v2, v1)));
   }
   // logFunction must be defined beforehand
-  #include infiniteAdaptive.stan
+  #include infiniteErrorBoundingPairs.stan
   #include infiniteSumToThreshold.stan
 }
 

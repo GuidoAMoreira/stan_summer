@@ -1,4 +1,4 @@
-// Sum-To-Threshold inifinite sum algorithm
+// Sum-to-threshold inifinite sum algorithm
 // Requires definition of logFunction with two arguments:
 // int k and real[] parameters
 real[] infiniteSumToThreshold(real[] p, real epsilon, int maxIter, int n0) {
