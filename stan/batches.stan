@@ -1,7 +1,7 @@
 // c-folding inifinite sum algorithm
 // Requires definition of logFunction with two arguments:
 // int k and real[] parameters
-real[] infiniteCfolding(real[] p, int c, int N_start, real epsilon, int maxIter, int n0) {
+real[] infiniteBatches(real[] p, int c, int N_start, real epsilon, int maxIter, int n0) {
   int N_inc = c * N_start;
   real storeVal[N_inc + 1];
   real leps = log(epsilon);
