@@ -19,7 +19,7 @@ real[] infiniteBatches(real[] p, int batch_size, real epsilon, int maxIter, int 
   storeVal[1] = log_sum_exp(sort_asc(storeVal));
 
   // Find the maximum
-  while (n < maxIter && n > batch_size && (
+  while (n < maxIter && n <= batch_size && (
     summedIncrement > leps ||
     storeVal[batch_size + 1] - storeVal[batch_size] >
       -log1p_exp(storeVal[batch_size + 1] - summedIncrement) ||
