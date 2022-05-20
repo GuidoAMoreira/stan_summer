@@ -37,13 +37,13 @@ data{
 }
 
 transformed data {
-  real params[2] = {log(Mu), Nu};
+  array[2] real params = {log(Mu), Nu};
   real TV = true_value(params, maxIter);
 }
 
 generated quantities {
-  real estimatedAdaptive[2] = infiniteAdaptive(params, Epsilon, maxIter, negative_infinity(), 0);
-  real estimatedSumToThreshold[2] = infiniteSumToThreshold(params, Epsilon, maxIter, 0);
+  array[2] real estimatedAdaptive = infiniteErrorBoundingPairs(params, Epsilon, maxIter, negative_infinity(), 0);
+  array[2] real estimatedSumToThreshold = infiniteSumToThreshold(params, Epsilon, maxIter, 0);
   real differenceAdaptive;
   real differenceSumToThreshold;
   real differenceAdaptive2;
